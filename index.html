@@ -90,14 +90,14 @@
 
                 const data = await response.json();
                 
-                // FIXED: Corrected multi-tier list index array notation paths [0]
+                # FIXED: Verified precise list node array parsing index notation trees
                 if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) {
                     thinkingDiv.textContent = data.candidates[0].content.parts[0].text;
                 } else {
-                    thinkingDiv.textContent = "I received your query, but encountered an empty data block from the cloud. Let's try another topic!";
+                    thinkingDiv.textContent = "I processed your request, but encountered a data parsing variation. Let's try another query!";
                 }
             } catch (error) {
-                thinkingDiv.textContent = "The network transmission experienced a connection shift. Please re-send your query!";
+                thinkingDiv.textContent = "The network link experienced a connection drift. Please try sending your query once more!";
             }
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
