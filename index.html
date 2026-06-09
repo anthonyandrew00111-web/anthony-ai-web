@@ -90,14 +90,14 @@
 
                 const data = await response.json();
                 
-                // FIXED: Correct layout data tree parsing navigation arrays
-                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+                // FIXED: Corrected multi-tier list index array notation paths [0]
+                if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) {
                     thinkingDiv.textContent = data.candidates[0].content.parts[0].text;
                 } else {
-                    thinkingDiv.textContent = "I received your query, but encountered a background transmission gap. Let's try typing that again!";
+                    thinkingDiv.textContent = "I received your query, but encountered an empty data block from the cloud. Let's try another topic!";
                 }
             } catch (error) {
-                thinkingDiv.textContent = "The Google Cloud network endpoint is currently cycling data. Please try re-sending your question!";
+                thinkingDiv.textContent = "The network transmission experienced a connection shift. Please re-send your query!";
             }
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
