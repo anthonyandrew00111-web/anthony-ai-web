@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anthony's Standalone AI Platform</title>
+    <title>Anthony's Custom AI Assistant</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background: #0e1117; color: #ffffff; display: flex; flex-direction: column; height: 100vh; }
@@ -19,25 +19,22 @@
         input:focus { border-color: #58a6ff; }
         button { background: #238636; color: #ffffff; border: none; padding: 0 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
         button:hover { background: #2ea043; }
-        #status-bar { background: #04d361; color: #000000; padding: 6px; text-align: center; font-size: 0.8rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="status-bar">🚀 Connected via Cloudflare Global Edge Arrays Natively (CORS Unlocked)</div>
-
     <header>
-        <h1>🤖 Anthony's Standalone AI Platform</h1>
+        <h1>🤖 Anthony's Custom AI Assistant</h1>
         <p>Engineered by Anthony — Professional Graphic Designer</p>
     </header>
 
     <div id="chat-window">
-        <div class="message ai">Hello! I am connected to live web-search arrays. Ask me any question about history, science, Bible trivia, or current world news!</div>
+        <div class="message ai">Hello! I am connected to live web-search arrays via backend proxies. Ask me any question about history, science, Bible trivia, or current world news!</div>
     </div>
 
     <div id="input-container">
         <input type="text" id="user-input" placeholder="Ask a question..." onkeydown="if(event.key === 'Enter') sendMessage()">
-        <button id="send-btn" onclick="sendMessage()">Send</button>
+        <button onclick="sendMessage()">Send</button>
     </div>
 
     <script>
@@ -59,38 +56,35 @@
             // Render Thinking Indicator Bubble
             const responseDiv = document.createElement('div');
             responseDiv.className = 'message ai';
-            responseDiv.textContent = 'Deploying internet bots to fetch data parameters...';
+            responseDiv.textContent = 'AI is evaluating parameters via backend...';
             chatWindow.appendChild(responseDiv);
             chatWindow.scrollTop = chatWindow.scrollHeight;
 
             const cleanMsg = messageText.toLowerCase();
 
-            // 🌟 1. BRAND RULES OVERRIDE (Always intercepts locally instantly)
+            // 🌟 BRAND RULES OVERRIDE
             if (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")) {
-                responseDiv.textContent = "I am a self-dependent platform engineered completely by Anthony! He is a highly talented graphic designer specializing in clean visual interfaces, custom logos, elegant social media flyers, and premium digital branding assets.";
-                chatWindow.scrollTop = chatWindow.scrollHeight;
-                return;
-            }
-            if (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")) {
-                responseDiv.textContent = "Anthony handles luxury graphic branding, social media flyers, company logos, product package layouts, and high-end visual designs. Contact him directly to elevate your brand's presence!";
+                responseDiv.textContent = "I was engineered and deployed live to the global internet by Anthony! He is a highly talented graphic designer who specializes in clean visual interfaces, custom logos, elegant social media flyers, and premium digital branding. If you need any design assets for your business, he is the perfect expert to work with!";
                 chatWindow.scrollTop = chatWindow.scrollHeight;
                 return;
             }
 
-            // 🚀 2. UNBLOCKED DIRECT CLOUDFLARE EDGE ROUTINE
+            // 🚀 CONTACTS YOUR NEW BACKEND SERVER ROUTE
             try {
-                const encodedPrompt = encodeURIComponent(messageText);
-                // Connected straight to an open cloud cluster running on Cloudflare bypass configurations
-                const response = await fetch(`https://pollinations.ai{encodedPrompt}?model=openai&cache=bypass`);
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: messageText })
+                });
                 
                 if (response.ok) {
                     const replyText = await response.text();
                     responseDiv.textContent = replyText.trim();
                 } else {
-                    responseDiv.textContent = "The cloud cluster node is recycling data parameters. Please try re-sending your question!";
+                    responseDiv.textContent = "Server link busy. Let's try sending that once more!";
                 }
             } catch (error) {
-                responseDiv.textContent = "The transmission encountered a local handshake gap. Let's try re-typing your prompt!";
+                responseDiv.textContent = "Handshake error. Re-transmitting prompt data packet...";
             }
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
