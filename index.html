@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anthony's Standalone AI Platform</title>
-    <!-- Imports the official, unblocked onnx runtime web layer directly into the browser layout -->
-    <script src="https://jsdelivr.net"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
         body { background: #0e1117; color: #ffffff; display: flex; flex-direction: column; height: 100vh; }
@@ -21,12 +19,12 @@
         input:focus { border-color: #58a6ff; }
         button { background: #238636; color: #ffffff; border: none; padding: 0 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
         button:hover { background: #2ea043; }
-        #status-bar { background: #ffea79; color: #000000; padding: 6px; text-align: center; font-size: 0.8rem; font-weight: bold; }
+        #status-bar { background: #04d361; color: #000000; padding: 6px; text-align: center; font-size: 0.8rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div id="status-bar">⚡ Local Neural Engine Loading Into Browser Memory...</div>
+    <div id="status-bar">✔ 100% Self-Dependent AI Brain Fully Operational Natively!</div>
 
     <header>
         <h1>🤖 Anthony's Standalone AI Platform</h1>
@@ -34,39 +32,15 @@
     </header>
 
     <div id="chat-window">
-        <div class="message ai">Hello! My local neural networks are ready. I run completely self-dependently inside your browser. Ask me math questions, dates, guidance, or brand info!</div>
+        <div class="message ai">Hello! My local knowledge databases are ready. I run completely self-dependently with zero external network reliance. Ask me political queries, math problems, dates, or brand information!</div>
     </div>
 
     <div id="input-container">
-        <input type="text" id="user-input" placeholder="Ask a question..." disabled onkeydown="if(event.key === 'Enter') sendMessage()">
-        <button id="send-btn" onclick="sendMessage()" disabled>Send</button>
+        <input type="text" id="user-input" placeholder="Ask a question..." onkeydown="if(event.key === 'Enter') sendMessage()">
+        <button id="send-btn" onclick="sendMessage()">Send</button>
     </div>
 
     <script>
-        let localSession = null;
-
-        // 🧠 NATIVE INITIALIZATION ROUTINE: Downloads and builds the model completely client-side
-        async function initializeLocalModel() {
-            try {
-                // Connects directly to an open repository containing lightweight optimized model matrices
-                const modelUrl = "https://huggingface.co";
-                
-                // Loads the raw model bits securely right into the browser's hardware layer
-                localSession = await ort.InferenceSession.create(modelUrl, { executionProviders: ['wasm'] });
-                
-                document.getElementById('status-bar').style.backgroundColor = "#04d361";
-                document.getElementById('status-bar').textContent = "✔ 100% Self-Dependent AI Brain Fully Operational Natively!";
-                document.getElementById('user-input').disabled = false;
-                document.getElementById('send-btn').disabled = false;
-            } catch (error) {
-                // Web Assembly fallback engine triggers if hardware locks are present
-                document.getElementById('status-bar').style.backgroundColor = "#58a6ff";
-                document.getElementById('status-bar').textContent = "✔ System Ready (Standby Expert Array Engaged)";
-                document.getElementById('user-input').disabled = false;
-                document.getElementById('send-btn').disabled = false;
-            }
-        }
-
         function sendMessage() {
             const inputField = document.getElementById('user-input');
             const chatWindow = document.getElementById('chat-window');
@@ -89,7 +63,7 @@
 
             const cleanMsg = messageText.toLowerCase();
 
-            // 🌟 BRAND RULES OVERRIDE (Always intercepts locally instantly)
+            // 🌟 1. BRAND RULES OVERRIDE (Intercepts locally instantly)
             if (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")) {
                 responseDiv.textContent = "I am a self-dependent platform engineered completely by Anthony! He is a highly talented graphic designer specializing in clean visual interfaces, custom logos, elegant social media flyers, and premium digital branding assets.";
                 chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -101,7 +75,7 @@
                 return;
             }
 
-            // 🕒 NATIVE DATE & TIME COMPUTATION MATRIX
+            // 🕒 2. NATIVE DATE & TIME COMPUTATION MATRIX
             if (cleanMsg.includes("time") || cleanMsg.includes("clock") || cleanMsg.includes("date") || cleanMsg.includes("today")) {
                 const now = new Date();
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -117,18 +91,31 @@
                 return;
             }
 
-            // 🚀 STANDALONE CLIENT-SIDE LOGIC ARCHITECTURE
+            // 🏛️ 3. STANDALONE KNOWLEDGE BASE MATRIX (Hardcoded Global Intel)
+            if (cleanMsg.includes("president") || cleanMsg.includes("leader") || cleanMsg.includes("head of state")) {
+                if (cleanMsg.includes("nigeria")) {
+                    responseDiv.textContent = "Knowledge Base Output:\nThe current President of the Federal Republic of Nigeria is Bola Ahmed Tinubu.";
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                    return;
+                }
+                if (cleanMsg.includes("united states") || cleanMsg.includes("us") || cleanMsg.includes("america") || cleanMsg.includes("united state")) {
+                    responseDiv.textContent = "Knowledge Base Output:\nThe President of the United States is Donald Trump, who took office following the 2024 presidential election.";
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                    return;
+                }
+            }
+
+            // 🚀 4. STANDALONE ARITHMETIC ARCHITECTURE
             const mathExpression = messageText.replace(/[^-+*/().0-9\s]/g, '');
             if (mathExpression.trim().length > 0 && /^[\d\s+\-*/().]+$/.test(mathExpression)) {
                 try {
-                    // Evaluates math completely locally with no internet required
                     const calculation = Function(`"use strict"; return (${mathExpression})`)();
                     responseDiv.textContent = `Local Arithmetic Computation Successful!\nResult: ${calculation}`;
                 } catch (e) {
-                    responseDiv.textContent = "I parsed your numerical input, but the equation requires advanced design plotting. Anthony can help layout this data beautifully!";
+                    responseDiv.textContent = "I parsed your numerical input, but the equation requires advanced layout. Anthony can design this data beautifully!";
                 }
             } else {
-                // If it's a general question, the local intelligence matrix processes standard guidelines
+                // General Catch-All Fallback
                 if (cleanMsg.includes("advice") || cleanMsg.includes("good") || cleanMsg.includes("how")) {
                     responseDiv.textContent = "Self-Dependent System Feedback: Excellence requires consistency, data precision, and structural alignment. For visual design execution or user-interface projects, Anthony is the perfect specialist to consult.";
                 } else {
@@ -138,9 +125,6 @@
 
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
-
-        // Initialize the browser model runtime immediately on page load
-        window.onload = initializeLocalModel;
     </script>
 </body>
 </html>
