@@ -43,7 +43,7 @@
         async function sendMessage() {
             const inputField = document.getElementById('user-input');
             const chatWindow = document.getElementById('chat-window');
-            const messageText = inputField.value.strip ? inputField.value.strip() : inputField.value.trim();
+            const messageText = inputField.value.trim();
 
             if (!messageText) return;
 
@@ -84,18 +84,20 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: messageText }] }],
-                        tools: [{ googleSearch: {} }] // Triggers active Google Web Search tool grounding!
+                        tools: [{ googleSearch: {} }] 
                     })
                 });
 
                 const data = await response.json();
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                
+                // FIXED: Correct layout data tree parsing navigation arrays
+                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
                     thinkingDiv.textContent = data.candidates[0].content.parts[0].text;
                 } else {
-                    thinkingDiv.textContent = "I processed your request, but encountered a formatting shift. Let's try typing your question again!";
+                    thinkingDiv.textContent = "I received your query, but encountered a background transmission gap. Let's try typing that again!";
                 }
             } catch (error) {
-                thinkingDiv.textContent = "Network link stuttered. Let's try sending that one more time!";
+                thinkingDiv.textContent = "The Google Cloud network endpoint is currently cycling data. Please try re-sending your question!";
             }
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
