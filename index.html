@@ -77,15 +77,15 @@
                 return;
             }
 
-            // 🚀 2. UNBLOCKED REAL-TIME SEARCH TRANSMISSION GRID
+            // 🚀 2. UNBLOCKED SECURE GATEWAY ROUTINE
             try {
                 const encodedPrompt = encodeURIComponent(messageText);
-                // Utilizes a CORS-proxy bypass channel optimized for web interface components
-                const response = await fetch(`https://pollinations.ai{encodedPrompt}?model=openai&cache=bypass`);
+                // Routes text requests through a secure proxy handler that forces browser CORS clearance automatically
+                const response = await fetch(`https://allorigins.win{encodeURIComponent(`https://pollinations.ai{encodedPrompt}?model=openai`)}`);
                 
                 if (response.ok) {
-                    const replyText = await response.text();
-                    responseDiv.textContent = replyText.trim();
+                    const data = await response.json();
+                    responseDiv.textContent = data.contents.trim();
                 } else {
                     responseDiv.textContent = "The database cluster returned an empty block. Please try sending your query once more!";
                 }
