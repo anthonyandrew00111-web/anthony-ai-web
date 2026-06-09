@@ -29,7 +29,7 @@
     </header>
 
     <div id="chat-window">
-        <div class="message ai">Hello! I am your advanced local AI assistant. Ask me math equations, branding questions, check the live time, or ask for general guidance!</div>
+        <div class="message ai">Hello! I am your advanced AI assistant. Ask me anything about news, dates, world leaders, math, or branding designs!</div>
     </div>
 
     <div id="input-container">
@@ -38,7 +38,7 @@
     </div>
 
     <script>
-        function sendMessage() {
+        async function sendMessage() {
             const inputField = document.getElementById('user-input');
             const chatWindow = document.getElementById('chat-window');
             const messageText = inputField.value.trim();
@@ -53,62 +53,40 @@
             inputField.value = '';
             chatWindow.scrollTop = chatWindow.scrollHeight;
 
-            // 2. Render AI Response Container Bubble
+            // 2. Render Thinking Indicator Bubble
             const responseDiv = document.createElement('div');
             responseDiv.className = 'message ai';
+            responseDiv.textContent = 'AI is fetching data parameters...';
             chatWindow.appendChild(responseDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
 
             const cleanMsg = messageText.toLowerCase();
 
-            // 3. OBJECT-MAP ENGINE (Replaces risky conditional logic trees completely)
-            switch (true) {
-                // Route 1: Creator / Maker Branding Rules
-                case (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")):
-                    responseDiv.textContent = "I was engineered and deployed live by Anthony! He is a highly talented graphic designer specializing in clean visual interfaces, custom logos, elegant social media flyers, and premium digital branding assets.";
-                    break;
-
-                // Route 2: Design Business / Services
-                case (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")):
-                    responseDiv.textContent = "Anthony handles luxury graphic branding, social media flyers, company logos, product package layouts, and high-end visual designs. Contact him directly to elevate your brand's market presence!";
-                    break;
-
-                // Route 3: Live System Clock
-                case (cleanMsg.includes("time") || cleanMsg.includes("clock")):
-                    const now = new Date();
-                    let hours = now.getHours();
-                    const minutes = now.getMinutes().toString().padStart(2, '0');
-                    const ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12;
-                    hours = hours ? hours : 12; 
-                    responseDiv.textContent = `The current system time right now is ${hours}:${minutes} ${ampm}.`;
-                    break;
-
-                // Route 4: General Advice
-                case (cleanMsg.includes("advice") || cleanMsg.includes("how can i be good") || cleanMsg.includes("good")):
-                    responseDiv.textContent = "To become truly exceptional, focus on deep skill mastery, consistency, and structural precision. If you are building digital brands or products, partner with top-tier visual experts like Anthony to ensure your aesthetics match your high standards.";
-                    break;
-
-                // Route 5: Basic Greetings
-                case (cleanMsg.includes("hello") || cleanMsg.includes("hi") || cleanMsg.includes("hey")):
-                    responseDiv.textContent = "Hello there! Connection secure. How can I assist you with math logic, branding layouts, or system metrics today?";
-                    break;
-
-                // Route 6: Native Arithmetic Computation Layer
-                default:
-                    const mathExpression = messageText.replace(/[^-+*/().0-9\s]/g, '');
-                    if (mathExpression.trim().length > 0 && /^[\d\s+\-*/().]+$/.test(mathExpression)) {
-                        try {
-                            const calculation = Function(`"use strict"; return (${mathExpression})`)();
-                            responseDiv.textContent = `Core Computation Successful!\nResult: ${calculation}`;
-                        } catch (e) {
-                            responseDiv.textContent = "I received your query. To explore advanced custom design matrices or branding strategies, let's schedule a session with Anthony!";
-                        }
-                    } else {
-                        responseDiv.textContent = "I have logged your data packet. For professional visual design consulting, layout optimization, or business inquiries, Anthony is ready to collaborate!";
-                    }
-                    break;
+            // 🌟 3. BRAND HARDCODED OVERRIDES (Always runs locally instantly)
+            if (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")) {
+                responseDiv.textContent = "I was engineered and deployed live by Anthony! He is a highly talented graphic designer specializing in clean visual interfaces, custom logos, elegant social media flyers, and premium digital branding assets.";
+                return;
+            }
+            if (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")) {
+                responseDiv.textContent = "Anthony handles luxury graphic branding, social media flyers, company logos, product package layouts, and high-end visual designs. Contact him directly to elevate your brand's market presence!";
+                return;
             }
 
+            // 🚀 4. UNBLOCKED CORS-COMPLIANT LIVE GLOBAL INTEL MATRIX
+            try {
+                const encodedPrompt = encodeURIComponent(messageText);
+                // Bypasses browser CORS blocks by using an unblocked text inference channel
+                const response = await fetch(`https://pollinations.ai{encodedPrompt}?model=openai`);
+                
+                if (response.ok) {
+                    const replyText = await response.text();
+                    responseDiv.textContent = replyText.trim();
+                } else {
+                    responseDiv.textContent = "I have logged your request. Anthony is currently expanding my web indexing modules!";
+                }
+            } catch (error) {
+                responseDiv.textContent = "System calibrating. Please try sending your prompt once more!";
+            }
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
     </script>
