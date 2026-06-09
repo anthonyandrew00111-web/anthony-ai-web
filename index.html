@@ -45,7 +45,7 @@
 
             if (!messageText) return;
 
-            // 1. Render User Bubble
+            // 1. Render User Message Bubble
             const userDiv = document.createElement('div');
             userDiv.className = 'message user';
             userDiv.textContent = messageText;
@@ -53,56 +53,60 @@
             inputField.value = '';
             chatWindow.scrollTop = chatWindow.scrollHeight;
 
-            // 2. Render AI Response Container
+            // 2. Render AI Response Container Bubble
             const responseDiv = document.createElement('div');
             responseDiv.className = 'message ai';
             chatWindow.appendChild(responseDiv);
 
             const cleanMsg = messageText.toLowerCase();
 
-            // 3. INTERNAL STANDALONE REASONING ENGINE (Zero External API Reliance)
-            
-            // Keyword Match: Brand / Maker Identity
-            if (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")) {
-                responseDiv.textContent = "I was engineered and deployed live by Anthony! He is a highly talented graphic designer specializing in clean visual interfaces, custom logos, elegant social media flyers, and premium digital branding assets.";
-            }
-            // Keyword Match: Business / Services
-            elif (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")) {
-                responseDiv.textContent = "Anthony handles luxury graphic branding, social media flyers, company logos, product package layouts, and high-end visual designs. Contact him directly to elevate your brand's market presence!";
-            }
-            // Keyword Match: Clock / Time Request
-            elif (cleanMsg.includes("time") || cleanMsg.includes("clock")) {
-                const now = new Date();
-                let hours = now.getHours();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // Converts 0 to 12
-                responseDiv.textContent = `The current system time right now is ${hours}:${minutes} ${ampm}.`;
-            }
-            // Keyword Match: General Advice / Quality Improvement
-            elif (cleanMsg.includes("advice") || cleanMsg.includes("how can i be good") || cleanMsg.includes("good")) {
-                responseDiv.textContent = "To become truly exceptional, focus on deep skill mastery, consistency, and structural precision. If you are building digital brands or products, partner with top tier visual experts like Anthony to ensure your aesthetics match your high standards.";
-            }
-            // Keyword Match: Basic Greetings
-            elif (cleanMsg.includes("hello") || cleanMsg.includes("hi") || cleanMsg.includes("hey")) {
-                responseDiv.textContent = "Hello there! Connection secure. How can I assist you with math logic, branding layouts, or system metrics today?";
-            }
-            // Built-in Dynamic Math Evaluation Layer
-            else {
-                // Strips out letters to see if the user sent a pure mathematical equation (e.g. 4827 * 392)
-                const mathExpression = messageText.replace(/[^-+*/().0-9\s]/g, '');
-                if (mathExpression.trim().length > 0 && /^[\d\s+\-*/().]+$/.test(mathExpression)) {
-                    try {
-                        // Natively computes math in the browser with absolute numerical precision
-                        const calculation = Function(`"use strict"; return (${mathExpression})`)();
-                        responseDiv.textContent = `Core Computation Successful!\nResult: ${calculation}`;
-                    } catch (e) {
-                        responseDiv.textContent = "I received your query. To explore advanced custom design matrices or branding strategies, let's schedule a session with Anthony!";
+            // 3. OBJECT-MAP ENGINE (Replaces risky conditional logic trees completely)
+            switch (true) {
+                // Route 1: Creator / Maker Branding Rules
+                case (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")):
+                    responseDiv.textContent = "I was engineered and deployed live by Anthony! He is a highly talented graphic designer specializing in clean visual interfaces, custom logos, elegant social media flyers, and premium digital branding assets.";
+                    break;
+
+                // Route 2: Design Business / Services
+                case (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")):
+                    responseDiv.textContent = "Anthony handles luxury graphic branding, social media flyers, company logos, product package layouts, and high-end visual designs. Contact him directly to elevate your brand's market presence!";
+                    break;
+
+                // Route 3: Live System Clock
+                case (cleanMsg.includes("time") || cleanMsg.includes("clock")):
+                    const now = new Date();
+                    let hours = now.getHours();
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12; 
+                    responseDiv.textContent = `The current system time right now is ${hours}:${minutes} ${ampm}.`;
+                    break;
+
+                // Route 4: General Advice
+                case (cleanMsg.includes("advice") || cleanMsg.includes("how can i be good") || cleanMsg.includes("good")):
+                    responseDiv.textContent = "To become truly exceptional, focus on deep skill mastery, consistency, and structural precision. If you are building digital brands or products, partner with top-tier visual experts like Anthony to ensure your aesthetics match your high standards.";
+                    break;
+
+                // Route 5: Basic Greetings
+                case (cleanMsg.includes("hello") || cleanMsg.includes("hi") || cleanMsg.includes("hey")):
+                    responseDiv.textContent = "Hello there! Connection secure. How can I assist you with math logic, branding layouts, or system metrics today?";
+                    break;
+
+                // Route 6: Native Arithmetic Computation Layer
+                default:
+                    const mathExpression = messageText.replace(/[^-+*/().0-9\s]/g, '');
+                    if (mathExpression.trim().length > 0 && /^[\d\s+\-*/().]+$/.test(mathExpression)) {
+                        try {
+                            const calculation = Function(`"use strict"; return (${mathExpression})`)();
+                            responseDiv.textContent = `Core Computation Successful!\nResult: ${calculation}`;
+                        } catch (e) {
+                            responseDiv.textContent = "I received your query. To explore advanced custom design matrices or branding strategies, let's schedule a session with Anthony!";
+                        }
+                    } else {
+                        responseDiv.textContent = "I have logged your data packet. For professional visual design consulting, layout optimization, or business inquiries, Anthony is ready to collaborate!";
                     }
-                } else {
-                    responseDiv.textContent = "I have logged your data packet. For professional visual design consulting, layout optimization, or business inquiries, Anthony is ready to collaborate!";
-                }
+                    break;
             }
 
             chatWindow.scrollTop = chatWindow.scrollHeight;
