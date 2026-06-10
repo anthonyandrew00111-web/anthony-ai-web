@@ -45,9 +45,8 @@ export default async function handler(req, res) {
       return res.status(200).send(`📅 System Date: ${formattedDate}\n🕒 Current Time: ${formattedTime}`);
     }
 
-    // 🏛️ 3. TYPO-PROOF STANDALONE KNOWLEDGE BASE MATRIX (Catches typos like "presdient")
+    // 🏛️ 3. TYPO-PROOF LEADERSHIP MATRIX
     const isAskingAboutPresident = cleanMsg.includes("president") || cleanMsg.includes("presdient") || cleanMsg.includes("leader") || cleanMsg.includes("head");
-    
     if (isAskingAboutPresident) {
       if (cleanMsg.includes("nigeria")) {
         return res.status(200).send("Knowledge Base Output:\nThe President of the Federal Republic of Nigeria is Bola Ahmed Tinubu.");
@@ -58,23 +57,30 @@ export default async function handler(req, res) {
       return res.status(200).send("Knowledge Base Output:\nWhich country's president are you looking for? Try asking 'who is the president of Nigeria' or 'who is the president of America'.");
     }
 
-    // 🧩 4. BIBLE TRIVIA KNOWLEDGE ARRAYS
+    // 🌍 4. EXPANDED HISTORY & CREATION DATA LAYER
+    if (cleanMsg.includes("created") || cleanMsg.includes("world begin") || cleanMsg.includes("origin of the earth") || cleanMsg.includes("creation")) {
+      if (cleanMsg.includes("bible") || cleanMsg.includes("biblical") || cleanMsg.includes("god") || cleanMsg.includes("scripture")) {
+        return res.status(200).send("Biblical Data Matrix:\nAccording to the Bible in Genesis 1:1, 'In the beginning, God created the heavens and the earth.' Biblical scholars using historical genealogies (such as the Ussher chronology) calculate the creation date to be roughly 4004 BC, making the earth approximately 6,000 years old according to literal scripture models.");
+      }
+      // Scientific calculation fallback path
+      return res.status(200).send("Scientific Data Matrix:\nAccording to modern astrophysical measurements and radioactive dating techniques, the universe began approximately 13.8 billion years ago during the Big Bang, and the Earth itself formed roughly 4.54 billion years ago.");
+    }
+
+    // 🧩 5. BIBLE TRIVIA KNOWLEDGE ARRAYS
     if (cleanMsg.includes("adam") || cleanMsg.includes("eve") || cleanMsg.includes("eden")) {
       return res.status(200).send("According to biblical records in Genesis, Adam and Eve were the first human souls created by God, placed in the Garden of Eden as caretakers before the historical fall.");
     }
 
-    // 🚀 5. NATIVE MATHEMATICAL ENGINE LAYER
+    // 🚀 6. NATIVE MATHEMATICAL ENGINE LAYER
     const mathExpression = userMessage.replace(/[^-+*/().0-9\s]/g, '');
     if (mathExpression.trim().length > 0 && /^[\d\s+\-*/().]+$/.test(mathExpression)) {
       try {
         const calculation = Function(`"use strict"; return (${mathExpression})`)();
         return res.status(200).send(`Core Computation Matrix Successful!\nResult: ${calculation}`);
-      } catch (e) {
-        // Drop down if format varies
-      }
+      } catch (e) {}
     }
 
-    // 💬 6. CORE INTERACTIVE CONVERSATION GUIDELINES
+    // 💬 7. CORE INTERACTIVE CONVERSATION GUIDELINES
     if (cleanMsg.includes("hello") || cleanMsg.includes("hi") || cleanMsg.includes("hey")) {
       return res.status(200).send("Hello, Anthony! Secure connection established. How can I assist you with math equations, clock syncs, or custom layout projects today?");
     }
