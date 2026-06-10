@@ -1,134 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anthony's Custom AI Assistant</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: #0e1117; color: #ffffff; display: flex; flex-direction: column; height: 100vh; }
-        header { background: #161b22; padding: 15px; text-align: center; border-bottom: 1px solid #21262d; }
-        header h1 { font-size: 1.3rem; color: #58a6ff; }
-        header p { font-size: 0.85rem; color: #8b949e; margin-top: 4px; }
-        #chat-window { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .message { max-width: 75%; padding: 12px 16px; border-radius: 12px; line-height: 1.4; font-size: 0.95rem; word-wrap: break-word; white-space: pre-wrap; }
-        .user { background: #1f6feb; color: #ffffff; align-self: flex-end; border-bottom-right-radius: 2px; }
-        .ai { background: #21262d; color: #c9d1d9; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid #30363d; }
-        #input-container { background: #161b22; padding: 15px; display: flex; gap: 10px; border-top: 1px solid #21262d; }
-        input { flex: 1; background: #0d1117; border: 1px solid #30363d; padding: 12px; border-radius: 6px; color: #ffffff; font-size: 1rem; outline: none; }
-        input:focus { border-color: #58a6ff; }
-        button { background: #238636; color: #ffffff; border: none; padding: 0 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
-        button:hover { background: #2ea043; }
-    </style>
-</head>
-<body>
+import os
+import datetime
+import urllib.parse
+import requests
+from bs4 import BeautifulSoup
+from flask import Flask, render_template, request, jsonify
 
-    <header>
-        <h1>🤖 Anthony's Custom AI Assistant</h1>
-        <p>Engineered by Anthony — Professional Graphic Designer</p>
-    </header>
+app = Flask(__name__)
 
-    <div id="chat-window">
-        <div class="message ai">Hello, Anthony! My standalone local intelligence networks are ready. Ask me about geography, global leaders, creation history, math, or branding designs!</div>
-    </div>
 
-    <div id="input-container">
-        <input type="text" id="user-input" placeholder="Ask a question..." onkeydown="if(event.key === 'Enter') sendMessage()">
-        <button onclick="sendMessage()">Send</button>
-    </div>
+def fetch_live_web_fallback(query: str) -> str:
+    try:
+        encoded_query = urllib.parse.quote(query)
+        gateway_url = f"https://pollinations.ai{encoded_query}?model=openai&cache=bypass"
+        response = requests.get(gateway_url, timeout=8)
+        if response.status_code == 200 and response.text.strip():
+            return response.text.strip()
+    except Exception:
+        pass
 
-    <script>
-        function sendMessage() {
-            const inputField = document.getElementById('user-input');
-            const chatWindow = document.getElementById('chat-window');
-            const messageText = inputField.value.trim();
+    try:
+        search_url = f"https://duckduckgo.com{encoded_query}"
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+        res = requests.get(search_url, headers=headers, timeout=5)
+        if res.status_code == 200:
+            soup = BeautifulSoup(res.text, "html.parser")
+            snippets = [result.text.strip() for result in soup.find_all("a", class_="result__snippet")[:3]]
+            if snippets:
+                return f"Live Search Grounding Output:\n\n{' '.join(snippets)}"
+    except Exception:
+        pass
 
-            if (!messageText) return;
+    return "Hello! I successfully logged your query data. Anthony is currently balancing my deep learning cloud clusters to optimize live general knowledge routing!"
 
-            // 1. Render User Bubble
-            const userDiv = document.createElement('div');
-            userDiv.className = 'message user';
-            userDiv.textContent = messageText;
-            chatWindow.appendChild(userDiv);
-            inputField.value = '';
-            chatWindow.scrollTop = chatWindow.scrollHeight;
 
-            // 2. Render AI Response Container
-            const responseDiv = document.createElement('div');
-            responseDiv.className = 'message ai';
-            chatWindow.appendChild(responseDiv);
+def evaluate_smart_matrix(user_query: str) -> str:
+    clean_msg = user_query.lower().strip()
 
-            const cleanMsg = messageText.toLowerCase().trim();
+    # 🕒 1. SYSTEM TIME & CLOCK LOGIC
+    if any(k in clean_msg for k in ["time", "date", "today", "clock"]):
+        now = datetime.datetime.now()
+        return f"📅 System Date: {now.strftime('%A, %B %d, %Y')}\n🕒 Current Time: {now.strftime('%I:%M %p')}"
 
-            // 🧠 3. STABLE SWITCH ENGINE (Bypasses risky if/elif chains completely)
-            switch (true) {
-                // Route A: Brand Custom Intercepts
-                case (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")):
-                    responseDiv.textContent = "I am Anthony's Advanced AI Assistant! I was engineered and deployed live to the web by Anthony, a highly talented graphic designer who creates clean, professional visuals and luxury branding layouts. If you need stunning graphics or a flyer for your business, he is the perfect professional to collaborate with!";
-                    break;
-                case (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")):
-                    responseDiv.textContent = "Anthony specializes in high-end graphic design, custom logos, business cards, social media flyers, and beauty product packaging. If you want to elevate your brand's visual identity, feel free to send him a direct message right now to discuss your project!";
-                    break;
+    # 🌟 2. BRAND MARKETING AND CREATOR RULES
+    if any(k in clean_msg for k in ["maker", "creator", "who made you", "anthony"]):
+        return "I am an advanced custom autonomous assistant engineered completely by Anthony! He is a highly skilled professional graphic designer, UI layout specialist, and Python automation programmer."
 
-                // Route B: High-Speed Native Clock & Date
-                case (cleanMsg.includes("time") || cleanMsg.includes("date") || cleanMsg.includes("today") || cleanMsg.includes("clock")):
-                    const now = new Date();
-                    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                    const formattedDate = now.toLocaleDateString('en-US', dateOptions);
-                    let hours = now.getHours();
-                    const minutes = now.getMinutes().toString().padStart(2, '0');
-                    const ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12;
-                    hours = hours ? hours : 12;
-                    responseDiv.textContent = `📅 System Date: ${formattedDate}\n🕒 Current Time: ${hours}:${minutes} ${ampm}`;
-                    break;
+    # 🏛️ 3. DIRECT LEADERSHIP & GEOGRAPHY KEYWORD RULES (Fixed to catch your phrase!)
+    if "president" in clean_msg or "leader" in clean_msg or "governor" in clean_msg:
+        if "nigeria" in clean_msg:
+            return "🏛️ Leadership Matrix:\nThe President of the Federal Republic of Nigeria is Bola Ahmed Tinubu."
+        if "america" in clean_msg or "us" in clean_msg or "usa" in clean_msg or "united states" in clean_msg:
+            return "🏛️ Leadership Matrix:\nThe President of the United States is Donald Trump."
 
-                // Route C: Geography & Capital Lookups
-                case (cleanMsg.includes("capital")):
-                    if (cleanMsg.includes("nigeria")) {
-                        responseDiv.textContent = "Geography Database:\nThe capital city of Nigeria is Abuja.";
-                    } else if (cleanMsg.includes("america") || cleanMsg.includes("us") || cleanMsg.includes("usa") || cleanMsg.includes("state")) {
-                        responseDiv.textContent = "Geography Database:\nThe capital city of the United States is Washington, D.C.";
-                    } else {
-                        responseDiv.textContent = "Geography Database:\nWhich country's capital are you looking for? Try asking 'capital city of Nigeria' or 'capital of America'.";
-                    }
-                    break;
+    if "capital" in clean_msg:
+        if "nigeria" in clean_msg:
+            return "🌍 Geography Database:\nThe capital city of Nigeria is Abuja."
+        if "america" in clean_msg or "us" in clean_msg or "usa" in clean_msg:
+            return "🌍 Geography Database:\nThe capital city of the United States is Washington, D.C."
 
-                // Route D: Typo-Proof Political Leaders
-                case (cleanMsg.includes("president") || cleanMsg.includes("presdient") || cleanMsg.includes("leader") || cleanMsg.includes("head")):
-                    if (cleanMsg.includes("nigeria")) {
-                        responseDiv.textContent = "Knowledge Base Output:\nThe President of the Federal Republic of Nigeria is Bola Ahmed Tinubu.";
-                    } else if (cleanMsg.includes("united states") || cleanMsg.includes("us") || cleanMsg.includes("america") || cleanMsg.includes("usa")) {
-                        responseDiv.textContent = "Knowledge Base Output:\nThe President of the United States is Donald Trump.";
-                    } else {
-                        responseDiv.textContent = "Knowledge Base Output:\nWhich country's president are you looking for? Try asking 'who is the president of Nigeria'.";
-                    }
-                    break;
+    # 📜 4. BIBLICAL TIMELINES AND TRIVIA
+    if any(k in clean_msg for k in ["adam", "eve", "eden"]):
+        return "📖 Biblical Data:\nAccording to Genesis, Adam and Eve were the first human souls created by God, placed in the Garden of Eden as caretakers before the historical fall."
+    if "created" in clean_msg or "creation" in clean_msg:
+        if any(k in clean_msg for k in ["bible", "scripture", "god"]):
+            return "📖 Biblical Data:\nGenesis 1:1 states, 'In the beginning, God created the heavens and the earth.' Chronology models calculate this timeline at roughly 4004 BC, making the earth approximately 6,000 years old."
 
-                // Route E: Creation & Timeline History
-                case (cleanMsg.includes("created") || cleanMsg.includes("world begin") || cleanMsg.includes("origin of the earth") || cleanMsg.includes("creation")):
-                    if (cleanMsg.includes("bible") || cleanMsg.includes("biblical") || cleanMsg.includes("god") || cleanMsg.includes("scripture")) {
-                        responseDiv.textContent = "Biblical Data Matrix:\nAccording to the Bible in Genesis 1:1, 'In the beginning, God created the heavens and the earth.' Chronology calculations place this timeline at roughly 4004 BC, making the earth approximately 6,000 years old according to literal scripture models.";
-                    } else {
-                        responseDiv.textContent = "Scientific Data Matrix:\nModern astrophysics calculations conclude that the universe began approximately 13.8 billion years ago during the Big Bang, and the Earth itself formed roughly 4.54 billion years ago.";
-                    }
-                    break;
+    # 🚀 5. ARITHMETIC ENGINE LAYER
+    math_chars = "".join([c for c in user_query if c in "0123456789+-*/(). "])
+    if math_chars.strip() and any(op in math_chars for op in "+-*/"):
+        try:
+            return f"🔢 Core Computation Successful!\nResult: {eval(math_chars, {'__builtins__': None}, {})}"
+        except Exception:
+            pass
 
-                // Route F: Bible Trivia Lookups
-                case (cleanMsg.includes("adam") || cleanMsg.includes("eve") || cleanMsg.includes("eden")):
-                    responseDiv.textContent = "Biblical Trivia:\nAccording to biblical records in Genesis, Adam and Eve were the first human souls created by God, placed in the Garden of Eden as caretakers before the historical fall.";
-                    break;
-                case (cleanMsg.includes("goliath") || cleanMsg.includes("david")):
-                    responseDiv.textContent = "Biblical Trivia:\nDavid, a young shepherd boy armed with a sling and a stone, defeated the giant Philistine champion Goliath in the Valley of Elah (1 Samuel 17).";
-                    break;
-                case (cleanMsg.includes("ark") || cleanMsg.includes("noah")):
-                    responseDiv.textContent = "Biblical Trivia:\nNoah built the ark according to God's precise commands to save his family and pairs of every animal from the Great Flood (Genesis 6).";
-                    break;
+    # 💬 6. CONVERSATIONAL FALLBACK ROUTINE
+    if any(k in clean_msg for k in ["hello", "hi", "hey"]):
+        return "Hello, Anthony! Secure connection verified. How can I assist you with math formulas, clock validation arrays, or layout projects today?"
 
-                // Route G: Riddles & Common Traps
-                case (cleanMsg.includes("widgets") || cleanMsg.includes("widget") || cleanMsg.includes("machines")):
-                    responseDiv.textContent = "Logic Matrix Verified:\nIt would take exactly 5 minutes. If 5 machines take 5 minutes to make 5 widgets, it means 1 machine takes 5 minutes to make 1 widget. Therefore, 100 machines working at the same time will finish 100 widgets in 5 minutes.";
-                    break;
-                case (cleanMsg.includes("feathers") || cleanMsg.includes("bricks") || cleanMsg.includes("heavier")):
-                    responseDiv.textContent = "Logic Matrix Verified:\nThey weigh exactly the same! Both are exactly one pound.";
-                    break;
+    return fetch_live_web_fallback(user_query)
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+@app.route("/api/chat", methods=["POST"])
+def chat_endpoint():
+    try:
+        data = request.get_json() or {}
+        user_message = data.get("message", "").strip()
+        if not user_message:
+            return jsonify({"answer": "Please enter a text question.", "sources": []})
+        return jsonify({"answer": evaluate_smart_matrix(user_message), "sources": []})
+    except Exception as e:
+        return jsonify({"answer": f"Backend processing error: {str(e)}", "sources": []})
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=5000, debug=True)
