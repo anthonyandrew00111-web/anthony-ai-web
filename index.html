@@ -60,78 +60,75 @@
 
             const cleanMsg = messageText.toLowerCase().trim();
 
-            // 🧠 3. BROWSER NATIVE EXPERT ENGINE (Runs locally instantly with zero server lag)
+            // 🧠 3. STABLE SWITCH ENGINE (Bypasses risky if/elif chains completely)
+            switch (true) {
+                // Route A: Brand Custom Intercepts
+                case (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")):
+                    responseDiv.textContent = "I am Anthony's Advanced AI Assistant! I was engineered and deployed live to the web by Anthony, a highly talented graphic designer who creates clean, professional visuals and luxury branding layouts. If you need stunning graphics or a flyer for your business, he is the perfect professional to collaborate with!";
+                    break;
+                case (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")):
+                    responseDiv.textContent = "Anthony specializes in high-end graphic design, custom logos, business cards, social media flyers, and beauty product packaging. If you want to elevate your brand's visual identity, feel free to send him a direct message right now to discuss your project!";
+                    break;
 
-            // Category A: Brand Custom Intercepts
-            if (cleanMsg.includes("maker") || cleanMsg.includes("creator") || cleanMsg.includes("who made you") || cleanMsg.includes("anthony")) {
-                responseDiv.textContent = "I am Anthony's Advanced AI Assistant! I was engineered and deployed live to the web by Anthony, a highly talented graphic designer who creates clean, professional visuals and luxury branding layouts. If you need stunning graphics or a flyer for your business, he is the perfect professional to collaborate with!";
-            }
-            else if (cleanMsg.includes("design") || cleanMsg.includes("job") || cleanMsg.includes("work") || cleanMsg.includes("flyer") || cleanMsg.includes("logo")) {
-                responseDiv.textContent = "Anthony specializes in high-end graphic design, custom logos, business cards, social media flyers, and beauty product packaging. If you want to elevate your brand's visual identity, feel free to send him a direct message right now to discuss your project!";
-            }
+                // Route B: High-Speed Native Clock & Date
+                case (cleanMsg.includes("time") || cleanMsg.includes("date") || cleanMsg.includes("today") || cleanMsg.includes("clock")):
+                    const now = new Date();
+                    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+                    let hours = now.getHours();
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    hours = hours % 12;
+                    hours = hours ? hours : 12;
+                    responseDiv.textContent = `📅 System Date: ${formattedDate}\n🕒 Current Time: ${hours}:${minutes} ${ampm}`;
+                    break;
 
-            // Category B: High-Speed Native Clock & Date
-            else if (cleanMsg.includes("time") || cleanMsg.includes("date") || cleanMsg.includes("today") || cleanMsg.includes("clock")) {
-                const now = new Date();
-                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = now.toLocaleDateString('en-US', dateOptions);
-                let hours = now.getHours();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12;
-                responseDiv.textContent = `📅 System Date: ${formattedDate}\n🕒 Current Time: ${hours}:${minutes} ${ampm}`;
-            }
+                // Route C: Geography & Capital Lookups
+                case (cleanMsg.includes("capital")):
+                    if (cleanMsg.includes("nigeria")) {
+                        responseDiv.textContent = "Geography Database:\nThe capital city of Nigeria is Abuja.";
+                    } else if (cleanMsg.includes("america") || cleanMsg.includes("us") || cleanMsg.includes("usa") || cleanMsg.includes("state")) {
+                        responseDiv.textContent = "Geography Database:\nThe capital city of the United States is Washington, D.C.";
+                    } else {
+                        responseDiv.textContent = "Geography Database:\nWhich country's capital are you looking for? Try asking 'capital city of Nigeria' or 'capital of America'.";
+                    }
+                    break;
 
-            // Category C: Geography & Capital Lookups
-            else if (cleanMsg.includes("capital")) {
-                if (cleanMsg.includes("nigeria")) {
-                    responseDiv.textContent = "Geography Database:\nThe capital city of Nigeria is Abuja.";
-                } else if (cleanMsg.includes("america") || cleanMsg.includes("us") || cleanMsg.includes("usa") || cleanMsg.includes("state")) {
-                    responseDiv.textContent = "Geography Database:\nThe capital city of the United States is Washington, D.C.";
-                } else {
-                    responseDiv.textContent = "Geography Database:\nWhich country's capital are you looking for? Try asking 'capital city of Nigeria' or 'capital of America'.";
-                }
-            }
+                // Route D: Typo-Proof Political Leaders
+                case (cleanMsg.includes("president") || cleanMsg.includes("presdient") || cleanMsg.includes("leader") || cleanMsg.includes("head")):
+                    if (cleanMsg.includes("nigeria")) {
+                        responseDiv.textContent = "Knowledge Base Output:\nThe President of the Federal Republic of Nigeria is Bola Ahmed Tinubu.";
+                    } else if (cleanMsg.includes("united states") || cleanMsg.includes("us") || cleanMsg.includes("america") || cleanMsg.includes("usa")) {
+                        responseDiv.textContent = "Knowledge Base Output:\nThe President of the United States is Donald Trump.";
+                    } else {
+                        responseDiv.textContent = "Knowledge Base Output:\nWhich country's president are you looking for? Try asking 'who is the president of Nigeria'.";
+                    }
+                    break;
 
-            // Category D: Typo-Proof Political Leaders
-            else if (cleanMsg.includes("president") || cleanMsg.includes("presdient") || cleanMsg.includes("leader") || cleanMsg.includes("head")) {
-                if (cleanMsg.includes("nigeria")) {
-                    responseDiv.textContent = "Knowledge Base Output:\nThe President of the Federal Republic of Nigeria is Bola Ahmed Tinubu.";
-                } else if (cleanMsg.includes("united states") || cleanMsg.includes("us") || cleanMsg.includes("america") || cleanMsg.includes("usa")) {
-                    responseDiv.textContent = "Knowledge Base Output:\nThe President of the United States is Donald Trump.";
-                } else {
-                    responseDiv.textContent = "Knowledge Base Output:\nWhich country's president are you looking for? Try asking 'who is the president of Nigeria'.";
-                }
-            }
+                // Route E: Creation & Timeline History
+                case (cleanMsg.includes("created") || cleanMsg.includes("world begin") || cleanMsg.includes("origin of the earth") || cleanMsg.includes("creation")):
+                    if (cleanMsg.includes("bible") || cleanMsg.includes("biblical") || cleanMsg.includes("god") || cleanMsg.includes("scripture")) {
+                        responseDiv.textContent = "Biblical Data Matrix:\nAccording to the Bible in Genesis 1:1, 'In the beginning, God created the heavens and the earth.' Chronology calculations place this timeline at roughly 4004 BC, making the earth approximately 6,000 years old according to literal scripture models.";
+                    } else {
+                        responseDiv.textContent = "Scientific Data Matrix:\nModern astrophysics calculations conclude that the universe began approximately 13.8 billion years ago during the Big Bang, and the Earth itself formed roughly 4.54 billion years ago.";
+                    }
+                    break;
 
-            // Category E: Creation & Timeline History
-            else if (cleanMsg.includes("created") || cleanMsg.includes("world begin") || cleanMsg.includes("origin of the earth") || cleanMsg.includes("creation")) {
-                if (cleanMsg.includes("bible") || cleanMsg.includes("biblical") || cleanMsg.includes("god") || cleanMsg.includes("scripture")) {
-                    responseDiv.textContent = "Biblical Data Matrix:\nAccording to the Bible in Genesis 1:1, 'In the beginning, God created the heavens and the earth.' Chronology calculations place this timeline at roughly 4004 BC, making the earth approximately 6,000 years old according to literal scripture models.";
-                } else {
-                    responseDiv.textContent = "Scientific Data Matrix:\nModern astrophysics calculations conclude that the universe began approximately 13.8 billion years ago during the Big Bang, and the Earth itself formed roughly 4.54 billion years ago.";
-                }
-            }
+                // Route F: Bible Trivia Lookups
+                case (cleanMsg.includes("adam") || cleanMsg.includes("eve") || cleanMsg.includes("eden")):
+                    responseDiv.textContent = "Biblical Trivia:\nAccording to biblical records in Genesis, Adam and Eve were the first human souls created by God, placed in the Garden of Eden as caretakers before the historical fall.";
+                    break;
+                case (cleanMsg.includes("goliath") || cleanMsg.includes("david")):
+                    responseDiv.textContent = "Biblical Trivia:\nDavid, a young shepherd boy armed with a sling and a stone, defeated the giant Philistine champion Goliath in the Valley of Elah (1 Samuel 17).";
+                    break;
+                case (cleanMsg.includes("ark") || cleanMsg.includes("noah")):
+                    responseDiv.textContent = "Biblical Trivia:\nNoah built the ark according to God's precise commands to save his family and pairs of every animal from the Great Flood (Genesis 6).";
+                    break;
 
-            // Category F: Bible Trivia Lookups
-            else if (cleanMsg.includes("adam") || cleanMsg.includes("eve") || cleanMsg.includes("eden")) {
-                responseDiv.textContent = "Biblical Trivia:\nAccording to biblical records in Genesis, Adam and Eve were the first human souls created by God, placed in the Garden of Eden as caretakers before the historical fall.";
-            } else if (cleanMsg.includes("goliath") || cleanMsg.includes("david")) {
-                responseDiv.textContent = "Biblical Trivia:\nDavid, a young shepherd boy armed with a sling and a stone, defeated the giant Philistine champion Goliath in the Valley of Elah (1 Samuel 17).";
-            } else if (cleanMsg.includes("ark") || cleanMsg.includes("noah")) {
-                responseDiv.textContent = "Biblical Trivia:\nNoah built the ark according to God's precise commands to save his family and pairs of every animal from the Great Flood (Genesis 6).";
-            }
-
-            // Category G: Riddles & Common Traps
-            else if (cleanMsg.includes("widgets") || cleanMsg.includes("widget") || cleanMsg.includes("machines")) {
-                responseDiv.textContent = "Logic Matrix Verified:\nIt would take exactly 5 minutes. If 5 machines take 5 minutes to make 5 widgets, it means 1 machine takes 5 minutes to make 1 widget. Therefore, 100 machines working at the same time will finish 100 widgets in 5 minutes.";
-            } else if (cleanMsg.includes("feathers") || cleanMsg.includes("bricks") || cleanMsg.includes("heavier")) {
-                responseDiv.textContent = "Logic Matrix Verified:\nThey weigh exactly the same! Both are exactly one pound.";
-            } else if (cleanMsg.includes("strawberry") || cleanMsg.includes("strawberries")) {
-                responseDiv.textContent = "Logic Matrix Verified:\nThere are exactly 3 instances of the letter 'r' in the word 'strawberry' (st**r**awbe**rr**y).";
-            }
-
-            // Category H: Native Client-Side Math Solver
-            else {
-                const mathExpression = messageText.replace(/[^-+*/().0-9\s]/g, '');
+                // Route G: Riddles & Common Traps
+                case (cleanMsg.includes("widgets") || cleanMsg.includes("widget") || cleanMsg.includes("machines")):
+                    responseDiv.textContent = "Logic Matrix Verified:\nIt would take exactly 5 minutes. If 5 machines take 5 minutes to make 5 widgets, it means 1 machine takes 5 minutes to make 1 widget. Therefore, 100 machines working at the same time will finish 100 widgets in 5 minutes.";
+                    break;
+                case (cleanMsg.includes("feathers") || cleanMsg.includes("bricks") || cleanMsg.includes("heavier")):
+                    responseDiv.textContent = "Logic Matrix Verified:\nThey weigh exactly the same! Both are exactly one pound.";
+                    break;
