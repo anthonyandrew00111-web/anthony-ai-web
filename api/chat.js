@@ -1,4 +1,4 @@
-// Premium unblocked serverless backend node architecture
+// Advanced key-secured Vercel backend server model
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -13,7 +13,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Safely processes incoming string arrays and body parsing schemas
     let bodyData = req.body;
     if (typeof bodyData === 'string') {
         try { bodyData = JSON.parse(bodyData); } catch(e) {}
@@ -21,21 +20,33 @@ export default async function handler(req, res) {
     
     const userMessage = bodyData.message || "";
     if (!userMessage) {
-        return res.status(200).send("Hello, Anthony! I received an empty data packet. Please type a specific query.");
+        return res.status(200).send("Hello, Anthony! Send a message to initiate the tracking models.");
     }
 
-    const encodedPrompt = encodeURIComponent(userMessage);
+    // Your working Google developer access token
+    const apiKey = "AQ.Ab8RN6KTvzhamBVg7tS9CGg4Pr_ZR4TSH0HHNLc20oM_yDtJvg";
+
+    // Calls Google's primary cloud nodes with built-in live internet search tools!
+    const googleResponse = await fetch(`https://googleapis.com{apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: userMessage }] }],
+            tools: [{ googleSearch: {} }] // Connects your public website to live Google Search grounding!
+        })
+    });
+
+    const data = await googleResponse.json();
     
-    // Server-side network channel completely bypasses browser blocks
-    const response = await fetch(`https://pollinations.ai{encodedPrompt}?model=openai`);
-    
-    if (response.ok) {
-      const textResponse = await response.text();
-      return res.status(200).send(textResponse.trim());
+    // Safely reads the text data out of Google's cloud response tree
+    if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) {
+        return res.status(200).send(data.candidates[0].content.parts[0].text);
     } else {
-      return res.status(200).send("The cloud node is experiencing traffic lag. Let's try sending that once more!");
+        return res.status(200).send("I processed your data, but encountered an empty response block. Let's try re-typing that topic!");
     }
+
   } catch (error) {
-    return res.status(200).send("Connection secure. How can I assist you with math logic, branding layouts, or system metrics today?");
+    // If the search node cycles, this fallback handles the message array smoothly
+    return res.status(200).send("The live search bots are currently cycling data parameters. Please try re-sending your question!");
   }
 }
